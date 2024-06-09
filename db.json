@@ -1,0 +1,18 @@
+{
+  "cars": [
+    {
+      "name": "dssadsdsas",
+      "rentPrice": "23213213",
+      "type": "Large",
+      "image": "blob:http://localhost:5173/9ef8404f-d564-4bb2-855a-b92e7e5950aa",
+      "id": 1
+    },
+    {
+      "name": "sadsadadd",
+      "rentPrice": "22279868",
+      "type": "Medium",
+      "image": "blob:http://localhost:5173/143b87d9-1a40-400a-a77a-c1281b599763",
+      "id": 2
+    }
+  ]
+}
