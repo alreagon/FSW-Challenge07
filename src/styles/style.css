@@ -1,0 +1,271 @@
+/* src/styles/style.css */
+
+@font-face {
+  font-family: "IBMPlexSans-Light";
+  src: url("../public/fonts/IBMPlexSans-Light.ttf");
+}
+
+@font-face {
+  font-family: "IBMPlexSans-Regular";
+  src: url("../public/fonts/IBMPlexSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "IBMPlexSans-Medium";
+  src: url("../public/fonts/IBMPlexSans-Medium.ttf");
+}
+
+@font-face {
+  font-family: "IBMPlexSans-Bold";
+  src: url("../public/fonts/IBMPlexSans-Bold.ttf");
+}
+
+:root {
+  --bg-primary: #0d28a6;
+  --bg-grey: #cfd4ed;
+  --bg-success: #5cb85f;
+  --bg-white: #fff;
+}
+
+body {
+  font-family: "IBMPlexSans-Regular";
+  background-color: #f4f5f7;
+  overflow-x: hidden;
+}
+
+.navbar {
+  width: calc(100% - 73.73px);
+  background-color: var(--bg-white);
+  color: var(--bg-primary);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 73.73px;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-logo {
+  width: 100px;
+  height: 34px;
+  background-color: var(--bg-grey);
+}
+
+.fixed-menu {
+  max-width: 80px !important;
+  width: inherit;
+  background-color: var(--bg-primary);
+  height: 100vh;
+}
+
+.fixed-menu .logo {
+  width: 34px;
+  height: 34px;
+  background-color: var(--bg-grey);
+}
+
+.menu-wrap div:nth-child(2) {
+  background: #ffffff4d;
+}
+
+.menu p {
+  font-family: "IBMPlexSans-Light";
+}
+
+.sidebar {
+  width: 220px !important;
+  height: 100vh;
+  margin-left: 73.73px;
+  margin-top: 72px;
+}
+
+.fixed-sidebar {
+  background: #fff;
+  margin-right: 40px;
+  height: inherit;
+}
+
+.sidebar p,
+.sidebar a {
+  font-family: "IBMPlexSans-Regular";
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: #8a8a8a;
+}
+
+.sidebar p:last-child,
+.sidebar a:last-child {
+  color: #151515;
+  background-color: var(--bg-grey);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 1rem;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.breadcrumb img {
+  width: 4px;
+  height: 8px;
+}
+
+.breadcrumb .active {
+  color: #222222;
+  font-family: "IBMPlexSans-Light";
+}
+
+.form-container {
+  padding: 2rem;
+}
+
+.cars-page {
+  padding: 2rem;
+}
+.cars-container {
+  padding: 20px;
+}
+.cars-container .container {
+  max-width: 1047px;
+}
+
+.cars-container .card {
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 31px 17px;
+  border: none;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+}
+
+.cars-container .card > img {
+  margin: 0 auto;
+  padding: 17px;
+  width: 100%;
+  height: 240px;
+}
+
+.cars-container .card-title {
+  font-family: "IBMPlexSans-Regular";
+}
+
+.cars-container .clock span {
+  font-family: "IBMPlexSans-Light";
+}
+
+.form-card {
+  background-color: #fff;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+
+.form-card .form-label {
+  color: #3c3c3c;
+}
+
+.form-card .form-label,
+.form-card .form-control::placeholder,
+.form-card select,
+.form-card .form-text,
+.form-card .form-control {
+  font-family: "IBMPlexSans-Light";
+  color: #8a8a8a;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.form-card .form-label span {
+  color: #ff0000;
+}
+
+.form-card .form-control,
+.form-card select {
+  color: #151515 !important;
+  width: 339px;
+}
+
+form .btn-wrap a {
+  width: 69px;
+  height: 36px;
+}
+
+form > .row {
+  margin-top: 100px;
+}
+
+.btn-success {
+  background-color: var(--bg-success);
+}
+
+.btn-outline-success {
+  border: 1px solid var(--bg-success);
+}
+
+.btn:disabled {
+  background-color: #d6d6d6;
+  border-color: #d6d6d68a;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.fs-12 {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.fs-14 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.fs-16 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.fs-20 {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background-color: var(--bg-primary);
+  border-color: var(--bg-primary);
+  color: var(--bg-white);
+}
+
+.btn-outline-primary {
+  border-color: var(--bg-primary);
+  color: var(--bg-primary);
+}
+
+.main-title {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
