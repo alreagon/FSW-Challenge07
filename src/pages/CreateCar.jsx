@@ -22,20 +22,16 @@ const CreateCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const carData = {
-      name,
-      rentPrice,
-      type,
-      image: image ? URL.createObjectURL(image) : "",
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("rentPrice", rentPrice);
+    formData.append("type", type);
+    formData.append("image", image);
 
     try {
       const response = await fetch(`${baseURL}/cars`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(carData),
+        body: formData,
       });
 
       if (response.ok) {

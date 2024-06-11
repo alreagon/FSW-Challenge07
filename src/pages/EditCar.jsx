@@ -15,12 +15,20 @@ const EditCar = () => {
 
   useEffect(() => {
     const fetchCar = async () => {
-      const response = await fetch(`${baseURL}/cars/${id}`);
-      const data = await response.json();
-      setName(data.name);
-      setRentPrice(data.rentPrice);
-      setType(data.type);
-      setImagePreview(data.image);
+      try {
+        const response = await fetch(`${baseURL}/cars/${id}`);
+        if (!response.ok) {
+          throw new Error("Car not found");
+        }
+        const data = await response.json();
+        setName(data.name);
+        setRentPrice(data.rentPrice);
+        setType(data.type);
+        setImagePreview(data.image);
+      } catch (error) {
+        console.error("Error fetching car:", error);
+        alert("Failed to fetch car data. Please try again.");
+      }
     };
 
     fetchCar();
@@ -36,20 +44,16 @@ const EditCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const carData = {
-      name,
-      rentPrice,
-      type,
-      image: image ? URL.createObjectURL(image) : imagePreview,
-    };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("rentPrice", rentPrice);
+    formData.append("type", type);
+    if (image) formData.append("image", image);
 
     try {
       const response = await fetch(`${baseURL}/cars/${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(carData),
+        body: formData,
       });
 
       if (response.ok) {
