@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const PORT = 8000;
 
-// Middleware
+// Middleware setup
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,19 +15,19 @@ app.use(express.urlencoded({ extended: true }));
 // Storage Engine for Multer
 const storageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/upload"); // directory
+    cb(null, "public/upload"); // Directory for image uploads
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + "-" + file.originalname);
+    cb(null, new Date().getTime() + "-" + file.originalname); // Naming the file
   },
 });
 
+// File filter for Multer
 const fileFilter = (req, file, cb) => {
   if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/svg+xml"
+    ["image/png", "image/jpg", "image/jpeg", "image/svg+xml"].includes(
+      file.mimetype
+    )
   ) {
     cb(null, true);
   } else {
@@ -38,19 +38,24 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// Upload middleware
 const upload = multer({
   storage: storageEngine,
   fileFilter: fileFilter,
-  limits: { fileSize: 2000000 }, // 2MB
+  limits: { fileSize: 2000000 }, // 2MB limit
 });
 
-// Mock Database
+// Path to the mock database file
 const dbPath = path.join(__dirname, "db.json");
+
+// Function to read the database
 const readDatabase = () => JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+
+// Function to save to the database
 const saveToDatabase = (data) =>
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
 
-// Get the next ID
+// Function to get the next ID
 const getNextId = () => {
   const db = readDatabase();
   const maxId = db.cars.reduce((max, car) => Math.max(car.id, max), 0);
@@ -60,7 +65,9 @@ const getNextId = () => {
 // Routes
 app.get("/cars", (req, res) => {
   const db = readDatabase();
-  res.json(db.cars);
+  // Sort cars by ID in descending order
+  const sortedCars = db.cars.sort((a, b) => b.id - a.id);
+  res.json(sortedCars);
 });
 
 app.get("/cars/:id", (req, res) => {
@@ -78,6 +85,7 @@ app.post("/cars", upload.single("image"), (req, res) => {
     rentPrice: req.body.rentPrice,
     type: req.body.type,
     image: `http://localhost:${PORT}/upload/${req.file.filename}`,
+    createdAt: new Date().toISOString(), // Store creation date
   };
   db.cars.push(newCar);
   saveToDatabase(db);
@@ -97,8 +105,10 @@ app.put("/cars/:id", upload.single("image"), (req, res) => {
     image: req.file
       ? `http://localhost:${PORT}/upload/${req.file.filename}`
       : db.cars[carIndex].image,
+    createdAt: db.cars[carIndex].createdAt, // Keep the original creation date
   };
 
+  // Delete old image if a new one is uploaded
   if (req.file && db.cars[carIndex].image) {
     const oldImagePath = path.join(
       __dirname,
@@ -119,6 +129,7 @@ app.delete("/cars/:id", (req, res) => {
   const carIndex = db.cars.findIndex((car) => car.id == req.params.id);
   if (carIndex === -1) return res.status(404).json({ error: "Car not found" });
 
+  // Delete image from server
   if (db.cars[carIndex].image) {
     const oldImagePath = path.join(
       __dirname,
